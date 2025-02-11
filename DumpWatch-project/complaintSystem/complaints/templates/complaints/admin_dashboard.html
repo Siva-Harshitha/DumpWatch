@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    p{
+        font-size: larger;
+        margin-top: 20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: x-large;
+        color: rgb(100, 94, 94);
+    }
+    span{
+        font-size: larger;
+        color: rgba(148, 10, 109, 0.663);
+    }
+    h4{
+        font-weight: bolder;
+        font-size: xx-large;
+    }
+    button[type="submit"]{
+        font-size:larger;
+        font-weight: bold;
+      padding: 5px;
+    }
+    input[type="checkbox"]{
+        transform: scale(1.5);
+        margin: 10px;
+    }
+
+</style>
+<body>
+    <div class="container">
+        <h1 class="text-center">Complaints List</h1>
+        <ul class="list-group">
+            {% for complaint in complaints %}
+            <li class="list-group-item {% if complaint.marked %}list-group-item-secondary{% endif %}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-1">Complaint from <span>{{ complaint.name }}</span></h4>
+                        <p><strong>Complaint:</strong> {{ complaint.complaint }}</p>
+                        <p><strong>Location:</strong> {{ complaint.location }}</p>
+                        <p><strong>City:</strong> {{ complaint.city }}</p>
+                        <p><strong>Email:</strong> {{ complaint.email }}</p>
+                        <p><strong>Date:</strong> {{ complaint.date }}</p>
+                    </div>
+                    {% if complaint.photo %}
+                    <img src="{{ complaint.photo.url }}" alt="Complaint Photo" style="max-width: 150px; height: auto;">
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <form method="POST" action="{% url 'delete_complaint' complaint.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    <form method="POST" action="{% url 'mark_complaint' complaint.id %}">
+                        {% csrf_token %}
+                        <input type="checkbox" name="marked" value="1" onchange="this.form.submit();" {% if complaint.marked %} checked {% endif %}>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 300px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+    button[type="submit"] {
+      background-color: #4caf50;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size:x-large;
+      padding: 10px;
+      width: 20%;
+      cursor: pointer;
+    }
+    input[type="file"] {
+  width: 250px;  /* Adjust width */
+  height: 50px;  /* Adjust height */
+}
+
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+    label{
+        font-size: x-large;
+        font-weight: bold;
+        font-family:'Times New Roman', Times, serif;
+    }
+    h1{
+        color: rgb(217, 112, 112);
+        text-decoration: underline;
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        font-size: 320%;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Raise Complaint</h1>
+        <form method="POST" enctype="multipart/form-data" id="complaintForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Name</label>
+                <input type="text" class="form-control" id="id_name" placeholder="Enter your name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="id_location">Location</label>
+                <input type="text" class="form-control" id="id_location" name="location" required>
+                <div id="map"></div>
+            </div>
+            <div class="form-group">
+                <label for="id_city">City</label>
+                <input type="text" class="form-control" placeholder="Enter your city name" id="id_city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <input type="email" class="form-control" id="id_email" placeholder="Enter your email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="id_date">Date</label>
+                <input type="date" class="form-control" id="id_date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="id_complaint">Complaint</label>
+                <textarea class="form-control" id="id_complaint" name="complaint" placeholder="Enter your query" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="id_photo">Upload Garbage Photo</label>
+                <input type="file" accept=".jpg,.pdf,.png,.jpeg" class="form-control" id="id_photo" name="photo">
+            </div>
+            <button type="submit"  class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([16.5631822, 81.5267175], 13); // Set initial view to the provided coordinates
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        function onLocationFound(e) {
+            const latlng = e.latlng;
+            const locationInput = document.getElementById('id_location');
+            locationInput.value = `Latitude: ${latlng.lat}, Longitude: ${latlng.lng}`;
+            L.marker(latlng).addTo(map).bindPopup('You are here').openPopup();
+            map.setView(latlng, 13);
+        }
+
+        function onLocationError(e) {
+            alert(e.message);
+        }
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
+        map.locate({setView: true, maxZoom: 16});
+        document.getElementById('complaintForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the traditional way
+    alert('We appreciate you taking the time to inform us.');
+    console.log('Form submitted with data:', new FormData(this)); // Log form data
+    this.submit(); // Submit the form programmatically
+});
+    </script>
+</body>
+</html>

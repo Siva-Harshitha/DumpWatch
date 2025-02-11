@@ -1,0 +1,132 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Admin Login</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST" action="{% url 'admin_login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <style>
+    body {
+      /* background-color: #f5f5f5; */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    h1 {
+      color: #4caf50;
+      text-decoration: underline;
+      font-size: 3.5em;
+      font-weight: bold;
+      margin: 0;
+      padding: 20px 0;
+      font-family:'Times New Roman', Times, serif;
+      text-align: center;
+    }
+    input[type="text"],
+    input[type="password"] {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+    button[type="submit"] {
+      background-color: #4caf50;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size:x-large;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+    .container{
+        background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 600px;
+            margin-top: 80px;
+    }
+    label{
+        font-size: x-large;
+        font-weight: bold;
+        font-family:'Times New Roman', Times, serif;
+    }
+  </style>
+  <body>
+    <h1 class="text-center">DumpWatch</h1>
+    <div class="container">
+      {% if messages %} {% for message in messages %}
+      <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %} {% endif %}
+      <form method="POST" action="{% url 'admin_login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </body>
+</html>
