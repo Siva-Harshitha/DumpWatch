@@ -64,7 +64,7 @@ def mark_complaint(request, complaint_id):
         if marked:
             subject = 'Complaint Acknowledgment'
             message = f'Dear {complaint.name},\n\nYour complaint has been resolved. Thank you for reporting the issue.\n\nRegards,\nAdmin.'
-            from_email = 'bsivaharshitha279@gmail.com'  # Replace with your email
+            from_email = 'replaceyourmail@gmail.com'  # Replace with your email
             recipient_list = [complaint.email]  # Send to the user's email
             send_mail(subject, message, from_email, recipient_list)
 
